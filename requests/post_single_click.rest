@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/led/single
+Content-Type: application/json
+
+{
+  "type": "ledSingleClick",
+  "color": "g",
+  "user": "anonymous"
+}
