@@ -18,6 +18,7 @@ app.use(middleware.requestLogger)
 
 // eslint-disable-next-line no-unused-vars
 const expressWs = require('express-ws')(app)
+const aWss = expressWs.getWss('/')
 
 app.use('/api/ping', pingRouter)
 app.use('/api/led', ledRouter)
@@ -28,6 +29,10 @@ app.ws('/echo', (ws, _req) => {
   ws.on('message', (msg) => {
     logger.info('Websocket msg received: ', msg)
     ws.send(String(msg).toUpperCase())
+
+    aWss.clients.forEach(client => {
+      client.send(msg)
+    })
   })
 })
 
