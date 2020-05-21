@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Websocket test - Web client</title>
+	<style type="text/css">
+		html, body {
+			background-color: #888;
+			text-align: center;
+		}
+	</style>
+	
+</head>
+<body>
+	<h1>CLIENT WS</h1>
+	<script type="text/javascript">
+    let socket = new WebSocket("ws://localhost:3001/client-socket");
+    socket.onopen = function(e) {
+      console.log("[onopen] Connection established");
+      socket.send(`{ "welcome": "Client has joined the meeting!"" }`);
+    };
+    
+    socket.onmessage = function(event) {
+      let json = JSON.parse(event.data)
+      console.log(`[message] Data received from server: ${event.data}`)
+      console.log('json', json)
+    };
+
+    sendData = function() {
+      socket.send(document.getElementById("msg").value);
+    };
+
+    redClick = function() {
+      socket.send(`{ "type": "ledSingleClick", "color": "r", "user": "anonym" }`);
+    }
+
+    blueClick = function() {
+      socket.send(`{ "type": "ledSingleClick", "color": "g", "user": "anonym" }`);
+    }
+
+    greenClick = function() {
+      socket.send(`{ "type": "ledSingleClick", "color": "b", "user": "anonym" }`);
+    }
+
+    queueClick = function() {
+      socket.send(`{ "type": "ledQueue", "colors": ["b", "g", "r"], "times": [1, 5, 3], "user": "anonym" }`);
+    }
+  </script>
+  <form name="wsSubmit" onsubmit="event.preventDefault(); sendData();">
+    <input id="msg" />
+    <button onClick="() => sendData()">send</button>
+  </form>
+  <button onClick="redClick()">RED</button>
+  <button onClick="greenClick()">GREEN</button>
+  <button onClick="blueClick()">BLUE</button><br/><br/>
+  <button onClick="queueClick()">ledQueue</button>
+
+</body>
+</html>

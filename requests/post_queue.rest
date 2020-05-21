@@ -2,7 +2,7 @@ POST http://localhost:3001/api/led/queue
 Content-Type: application/json
 
 {
-  "type": "queue",
+  "type": "ledQueue",
   "colors": ["r", "g", "b"],
   "times": [1, 5, 3],
   "user": "anonymous"

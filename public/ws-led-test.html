@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Websocket test - LED client</title>
+	<style type="text/css">
+		html, body {
+			background-color: #ffffff;
+			text-align: center;
+		}
+	</style>
+	
+</head>
+<body>
+	<h1>LED WS</h1>
+	<script type="text/javascript">
+    let socket = new WebSocket("ws://localhost:3001/led-socket");
+    socket.onopen = function(e) {
+      console.log("[onopen] Connection established");
+      socket.send(`{ "welcome": "LED server has joined in!" }`);
+    };
+    
+    socket.onmessage = function(event) {
+      console.log(`[message] Data received from server: ${event.data}`)
+    };
+
+    socket.onclose = function(event) {
+      console.log('[onclose] Socket connection closed')
+    }
+
+    sendInput = function() {
+      socket.send(document.getElementById("msg").value);
+    };
+
+    sendRequest = function(data) {
+      socket.send(`{ "type": "requestNextInQueue" }`);
+    }
+
+    sendStartExecution = function(data) {
+      socket.send(`{ "type": "executionStarted" }`);
+    }
+
+    sendStopExecution = function(data) {
+      socket.send(`{ "type": "executionStopped" }`);
+    }
+
+  </script>
+  <form name="wsSubmit" onsubmit="event.preventDefault(); sendInput();">
+    <input id="msg" />
+    <button>send</button>
+  </form>
+  <button onClick="sendRequest()">requestNextInQueue</button><br />
+  <button onClick="sendStartExecution()">startExecution</button><button onClick="sendStopExecution()">stopExecution</button>
+</body>
+</html>

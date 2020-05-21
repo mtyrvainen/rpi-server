@@ -3,10 +3,10 @@ const sqlite3 = require('sqlite3').verbose()
 const sqlite = require('sqlite')
 const logger = require('../utils/logger')
 
-const openDb = async () => {
+const openDb = async (dbName) => {
   try {
     const db = await sqlite.open({
-      filename: config.SQLITE_DB,
+      filename: dbName,
       driver: sqlite3.Database
     })
     logger.info('Connected to DB:', config.SQLITE_DB)
@@ -26,7 +26,7 @@ const closeDb = async (db) => {
 }
 
 const getLedClicks = async () => {
-  const db = await openDb()
+  const db = await openDb(config.SQLITE_DB)
 
   const ledResult = db.get(`SELECT red_clicks as redClicks,
     blue_clicks as blueClicks,
@@ -37,7 +37,7 @@ const getLedClicks = async () => {
 }
 
 const updateSingleClicks = async (clickData) => {
-  const db = await openDb()
+  const db = await openDb(config.SQLITE_DB)
 
   let color
   switch(clickData.color) {

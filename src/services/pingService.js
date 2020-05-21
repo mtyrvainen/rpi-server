@@ -1,5 +1,5 @@
 const logger = require('../utils/logger')
-const { updatePingCount } = require('../models/ping')
+const { updatePingCount } = require('../models/pingData')
 
 const handlePing = async () => {
   logger.info('a ping received')
