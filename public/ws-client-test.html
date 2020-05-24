@@ -13,7 +13,7 @@
 <body>
 	<h1>CLIENT WS</h1>
 	<script type="text/javascript">
-    let socket = new WebSocket("ws://localhost:3001/client-socket");
+    let socket = new WebSocket("ws://tyrvainen.hopto.org:3001/client-socket");
     socket.onopen = function(e) {
       console.log("[onopen] Connection established");
       socket.send(`{ "welcome": "Client has joined the meeting!"" }`);
@@ -34,15 +34,15 @@
     }
 
     blueClick = function() {
-      socket.send(`{ "type": "ledSingleClick", "color": "g", "user": "anonym" }`);
-    }
-
-    greenClick = function() {
       socket.send(`{ "type": "ledSingleClick", "color": "b", "user": "anonym" }`);
     }
 
+    greenClick = function() {
+      socket.send(`{ "type": "ledSingleClick", "color": "g", "user": "anonym" }`);
+    }
+
     queueClick = function() {
-      socket.send(`{ "type": "ledQueue", "colors": ["b", "g", "r"], "times": [1, 5, 3], "user": "anonym" }`);
+      socket.send(`{ "type": "ledQueue", "colors": ["b", "g", "r", "b", "g", "r", "r"], "times": [0.1, 0.5, 0.3, 0.3, 0.2, 0.1, 0.1], "user": "anonym" }`);
     }
   </script>
   <form name="wsSubmit" onsubmit="event.preventDefault(); sendData();">

@@ -4,11 +4,13 @@ const {
   sendButtonDisable,
   sendButtonEnable,
   sendNewQueueItem,
-  sendProcessNextQueueItem
+  sendProcessNextQueueItem,
+  sendSingleClick
 } = require('../services/senderService')
 
 const serverState = {
   isExecutionRunning: false,
+  isServerReady: false,
   queueConstraints: {
     maxQueueLength: config.LED_QUEUE_MAX_LENGTH,
     maxLedsPerQueue: config.MAX_LEDS_PER_QUEUE_ITEM,
@@ -33,10 +35,11 @@ const addLedQueueItem = (queueItem) => {
   if (serverState.ledQueue.length < serverState.queueConstraints.maxQueueLength) {
     serverState.ledQueue.push(queueItem)
     sendNewQueueItem(queueItem, serverState.socketConnections)
-    return queueItem
+    if (serverState.ledQueue.length === 1 && !serverState.isExecutionRunning && serverState.isServerReady) {
+      processNextInQueue()
+    } 
   } else {
     logger.error('led queue already full, discarding new item')
-    return null
   }
 }
 
@@ -46,6 +49,32 @@ const getFirstLedQueueItem = () => {
   } else {
     return null
   }
+}
+
+const handleSingleClick = (singleClickData) => {
+  switch(singleClickData.color) {
+    case 'r':
+      if (serverState.buttonStatus.redButtonEnabled) {
+        disableButton(singleClickData.color)
+        sendSingleClick(singleClickData, serverState.socketConnections)
+      }
+      break
+    case 'g':
+      if (serverState.buttonStatus.greenButtonEnabled) {
+        disableButton(singleClickData.color)
+        sendSingleClick(singleClickData, serverState.socketConnections)
+      }
+      break
+    case 'b':
+      if (serverState.buttonStatus.blueButtonEnabled) {
+        disableButton(singleClickData.color)
+        sendSingleClick(singleClickData, serverState.socketConnections)
+      }
+      break
+    default:
+      logger.error('wrong button color, discarded')
+      break
+    }
 }
 
 const disableButton = (color) => {
@@ -147,10 +176,12 @@ const stopExecutionRunning = () => {
 }
 
 const processNextInQueue = () => {
+  serverState.isServerReady = true
   const queueItem = getFirstLedQueueItem()
 
   if (queueItem) {
     console.log('item requested and queue not empty')
+    serverState.isServerReady = false
     sendProcessNextQueueItem(queueItem, serverState.socketConnections)
   } else {
     logger.info('--> queue is empty, nothing to send')
@@ -169,5 +200,6 @@ module.exports = {
   removeLedServer,
   startExecutionRunning,
   stopExecutionRunning,
-  processNextInQueue
+  processNextInQueue,
+  handleSingleClick
 }

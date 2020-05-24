@@ -9,7 +9,7 @@ const LED_QUEUE_MAX_LENGTH = 10
 const MAX_LEDS_PER_QUEUE_ITEM = 10
 const MAX_TIME_ALLOWED_PER_LED = 5000 // in milliseconds
 const MIN_TIME_ALLOWED_PER_LED = 100 // in milliseconds
-const BUTTON_TIMEOUT = 10000 // in milliseconds
+const BUTTON_TIMEOUT = 3000 // in milliseconds
 
 if (process.env.NODE_ENV === 'dev') {
   SERVER_PORT = 3001
