@@ -25,6 +25,15 @@ const closeDb = async (db) => {
   }
 }
 
+const getServerStartTime = async() => {
+  const db = await openDb(config.SQLITE_DB)
+
+  const uptime = db.get(`SELECT server_start as uptime
+    FROM clicks`)
+  closeDb(db)
+  return uptime
+}
+
 const getLedClicks = async () => {
   const db = await openDb(config.SQLITE_DB)
 
@@ -68,7 +77,23 @@ const updateSingleClicks = async (clickData) => {
   return updatedClicks
 }
 
+const initializeClickData = async () => {
+  const db = await openDb(config.SQLITE_DB)
+
+  const updateResult = await db.run(
+    `UPDATE clicks SET red_clicks = 0,
+      blue_clicks = 0,
+      green_clicks = 0,
+      server_start = CURRENT_TIMESTAMP`
+  )
+
+  closeDb(db)
+  return updateResult
+}
+
 module.exports = {
   getLedClicks,
-  updateSingleClicks
+  updateSingleClicks,
+  initializeClickData,
+  getServerStartTime
 }

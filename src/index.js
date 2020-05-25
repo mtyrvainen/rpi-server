@@ -89,13 +89,7 @@ app.use(middleware.errorHandler)
 
 const SERVER_PORT = config.SERVER_PORT
 
-// TODO: For Dev REMOVE
-if (process.env.NODE_ENV === 'devs') {
-  logger.info('Because in dev, set interval for LED queue purging')
-  setInterval(() => {
-    ledService.removeFirstItemFromQueue()
-  }, 10000)
-}
+ledService.initialize()
 
 app.listen(SERVER_PORT, () => {
   logger.info(`Server running on port ${SERVER_PORT}`)

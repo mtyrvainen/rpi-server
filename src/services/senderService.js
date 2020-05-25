@@ -24,17 +24,19 @@ const sendToClient = (msg, ws) => {
 
 /* -- wrappers -- */
 
-const sendButtonDisable = (color, socketConnections) => {
+const sendButtonDisable = (color, socketConnections, timeOut=0) => {
   sendToAllClients({
     type: 'disableButton',
-    color: color
+    color: color,
+    timeOut
   }, socketConnections)
 }
 
-const sendButtonEnable = (color, socketConnections) => {
+const sendButtonEnable = (color, socketConnections, timeBetweenExecutions=0) => {
   sendToAllClients({
     type: 'enableButton',
-    color: color
+    color: color,
+    timeBetweenExecutions: timeBetweenExecutions
   }, socketConnections)
 }
 
@@ -70,6 +72,45 @@ const sendSingleClick = (singleClickData, socketConnections) => {
     socketConnections)
 }
 
+const sendDisableQueueBuilder = (socketConnections) => {
+  sendToAllClients(
+    {
+      type: 'disableQueueBuilder'
+    },
+    socketConnections
+  )
+}
+
+const sendEnableQueueBuilder = (socketConnections) => {
+  sendToAllClients(
+    {
+      type: 'enableQueueBuilder'
+    },
+    socketConnections
+  )
+}
+
+const sendClickAmounts = (clickData, socketConnections) => {
+  sendToAllClients(
+    {
+      type: 'singleClickAmounts',
+      clickData: clickData
+    },
+    socketConnections
+  )
+}
+
+const sendConnectedClientsAmount = (socketConnections) => {
+  sendToAllClients(
+    {
+      type: 'connectedClientsAmount',
+      connectedClients: socketConnections.clients.length
+    },
+    socketConnections
+  )
+}
+
+
 module.exports = {
   //sendToLedServer,
   //sendToAllClients,
@@ -78,5 +119,9 @@ module.exports = {
   sendButtonEnable,
   sendNewQueueItem,
   sendProcessNextQueueItem,
-  sendSingleClick
+  sendSingleClick,
+  sendDisableQueueBuilder,
+  sendEnableQueueBuilder,
+  sendClickAmounts,
+  sendConnectedClientsAmount
 }

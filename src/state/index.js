@@ -5,8 +5,13 @@ const {
   sendButtonEnable,
   sendNewQueueItem,
   sendProcessNextQueueItem,
-  sendSingleClick
+  sendSingleClick,
+  sendDisableQueueBuilder,
+  sendEnableQueueBuilder,
+  sendClickAmounts,
+  sendConnectedClientsAmount
 } = require('../services/senderService')
+const ledService = require('../services/ledService')
 
 const serverState = {
   isExecutionRunning: false,
@@ -20,6 +25,7 @@ const serverState = {
   },
   ledQueue: [],
   buttonTimeOut: config.BUTTON_TIMEOUT,
+  isQueueBuilderDisabled: false,
   buttonStatus: {
     redButtonEnabled: true,
     greenButtonEnabled: true,
@@ -35,9 +41,15 @@ const addLedQueueItem = (queueItem) => {
   if (serverState.ledQueue.length < serverState.queueConstraints.maxQueueLength) {
     serverState.ledQueue.push(queueItem)
     sendNewQueueItem(queueItem, serverState.socketConnections)
+    if (serverState.ledQueue.length === serverState.queueConstraints.maxQueueLength) {
+      //TODO: disable queue builder
+      serverState.isQueueBuilderDisabled = true
+      sendDisableQueueBuilder(serverState.socketConnections)
+    }
+
     if (serverState.ledQueue.length === 1 && !serverState.isExecutionRunning && serverState.isServerReady) {
       processNextInQueue()
-    } 
+    }
   } else {
     logger.error('led queue already full, discarding new item')
   }
@@ -45,36 +57,47 @@ const addLedQueueItem = (queueItem) => {
 
 const getFirstLedQueueItem = () => {
   if (serverState.ledQueue.length > 0) {
+    if (serverState.isQueueBuilderDisabled) {
+      serverState.isQueueBuilderDisabled = false
+      sendEnableQueueBuilder(serverState.socketConnections)
+    }
+
     return serverState.ledQueue.shift()
   } else {
     return null
   }
 }
 
-const handleSingleClick = (singleClickData) => {
+const handleSingleClick = async (singleClickData) => {
   switch(singleClickData.color) {
-    case 'r':
-      if (serverState.buttonStatus.redButtonEnabled) {
-        disableButton(singleClickData.color)
-        sendSingleClick(singleClickData, serverState.socketConnections)
-      }
-      break
-    case 'g':
-      if (serverState.buttonStatus.greenButtonEnabled) {
-        disableButton(singleClickData.color)
-        sendSingleClick(singleClickData, serverState.socketConnections)
-      }
-      break
-    case 'b':
-      if (serverState.buttonStatus.blueButtonEnabled) {
-        disableButton(singleClickData.color)
-        sendSingleClick(singleClickData, serverState.socketConnections)
-      }
-      break
-    default:
-      logger.error('wrong button color, discarded')
-      break
+  case 'r':
+    if (serverState.buttonStatus.redButtonEnabled) {
+      disableButton(singleClickData.color)
+      sendSingleClick(singleClickData, serverState.socketConnections)
+      const updatedClickAmounts = await ledService.logSingleClicks(singleClickData)
+      sendClickAmounts(updatedClickAmounts, serverState.socketConnections)
     }
+    break
+  case 'g':
+    if (serverState.buttonStatus.greenButtonEnabled) {
+      disableButton(singleClickData.color)
+      sendSingleClick(singleClickData, serverState.socketConnections)
+      const updatedClickAmounts = await ledService.logSingleClicks(singleClickData)
+      sendClickAmounts(updatedClickAmounts, serverState.socketConnections)
+    }
+    break
+  case 'b':
+    if (serverState.buttonStatus.blueButtonEnabled) {
+      disableButton(singleClickData.color)
+      sendSingleClick(singleClickData, serverState.socketConnections)
+      const updatedClickAmounts = await ledService.logSingleClicks(singleClickData)
+      sendClickAmounts(updatedClickAmounts, serverState.socketConnections)
+    }
+    break
+  default:
+    logger.error('wrong button color, discarded')
+    break
+  }
 }
 
 const disableButton = (color) => {
@@ -83,21 +106,21 @@ const disableButton = (color) => {
   case 'r':
     if (serverState.buttonStatus.redButtonEnabled) {
       serverState.buttonStatus.redButtonEnabled = false
-      sendButtonDisable(color, serverState.socketConnections)
+      sendButtonDisable(color, serverState.socketConnections, serverState.buttonTimeOut)
       setTimeout(() => enableButton(color), serverState.buttonTimeOut)
     }
     break
   case 'g':
     if (serverState.buttonStatus.greenButtonEnabled) {
       serverState.buttonStatus.greenButtonEnabled = false
-      sendButtonDisable(color, serverState.socketConnections)
+      sendButtonDisable(color, serverState.socketConnections, serverState.buttonTimeOut)
       setTimeout(() => enableButton(color), serverState.buttonTimeOut)
     }
     break
   case 'b':
     if (serverState.buttonStatus.blueButtonEnabled) {
       serverState.buttonStatus.blueButtonEnabled = false
-      sendButtonDisable(color, serverState.socketConnections)
+      sendButtonDisable(color, serverState.socketConnections, serverState.buttonTimeOut)
       setTimeout(() => enableButton(color), serverState.buttonTimeOut)
     }
     break
@@ -137,7 +160,7 @@ const enableButton = (color) => {
     serverState.buttonStatus.redButtonEnabled = true
     serverState.buttonStatus.greenButtonEnabled = true
     serverState.buttonStatus.blueButtonEnabled = true
-    sendButtonEnable(color, serverState.socketConnections)
+    sendButtonEnable(color, serverState.socketConnections, serverState.queueConstraints.TIME_BETWEEN_QUEUE_EXECUTIONS)
     break
   default:
     logger.error('wrong button color for enabling, ignored')
@@ -155,6 +178,7 @@ const setLedServerSocket = (websocket) => {
 const setClientSockets = (clientArray) => {
   serverState.socketConnections.clients = clientArray
   logger.info('Client socket opened, currently connected: ', serverState.socketConnections.clients.length)
+  sendConnectedClientsAmount(serverState.socketConnections)
 }
 
 const isLedServerRegistered = () => {

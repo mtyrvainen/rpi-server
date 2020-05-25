@@ -1,6 +1,7 @@
 const parser = require('../utils/parser')
 const logger = require('../utils/logger')
 const state = require('../state')
+const ledService = require('./ledService')
 
 const handleClientMessage = (msg) => {
   const jsonMsg = parser.toJson(msg)
@@ -31,15 +32,23 @@ const handleClientMessage = (msg) => {
   }
 }
 
-const initializeClientData = (ws) => {
+const initializeClientData = async (ws) => {
   logger.info('queue for initial: ', state.serverState.ledQueue)
+  const clicks = await ledService.getLedData()
+  const uptime = await ledService.getUptime()
+  console.log('uptime', uptime)
   ws.send(JSON.stringify({
     type: 'clientInitialData',
     queue: state.serverState.ledQueue,
     // TODO: currently running queue item
     redButton: state.serverState.buttonStatus.redButtonEnabled,
     greenButton: state.serverState.buttonStatus.greenButtonEnabled,
-    blueButton: state.serverState.buttonStatus.blueButtonEnabled
+    blueButton: state.serverState.buttonStatus.blueButtonEnabled,
+    queueConstraints: state.serverState.queueConstraints,
+    queueBuilderDisabled: state.serverState.isQueueBuilderDisabled,
+    buttonTimeout: state.serverState.buttonTimeOut,
+    clickAmounts: clicks,
+    serverUptime: uptime.replace(' ago', '')
   }))
 }
 
