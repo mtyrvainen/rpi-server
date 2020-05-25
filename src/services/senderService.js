@@ -8,7 +8,7 @@ const sendToLedServer = (msg, socketConnections) => {
 const sendToAllClients = (msg, socketConnections) => {
   logger.info('Sending to clients', msg)
 
-  if (socketConnections.client && socketConnections.clients.length > 0) {
+  if (socketConnections.clients && socketConnections.clients.length > 0) {
     socketConnections.clients.filter((socket) => {
       return socket.route === '/client-socket'
     }).forEach(function (client) {
