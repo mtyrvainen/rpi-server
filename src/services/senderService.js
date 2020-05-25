@@ -61,6 +61,15 @@ const sendProcessNextQueueItem = (queueItem, socketConnections) => {
     socketConnections)
 }
 
+const sendSingleClick = (singleClickData, socketConnections) => {
+  sendToLedServer(
+    {
+      type: 'singleClickData',
+      singleClickData: singleClickData
+    },
+    socketConnections)
+}
+
 module.exports = {
   //sendToLedServer,
   //sendToAllClients,
@@ -69,4 +78,5 @@ module.exports = {
   sendButtonEnable,
   sendNewQueueItem,
   sendProcessNextQueueItem,
+  sendSingleClick
 }

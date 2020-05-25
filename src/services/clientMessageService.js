@@ -18,7 +18,7 @@ const handleClientMessage = (msg) => {
     switch(parsedMsg.type) {
     case 'ledSingleClick':
       logger.info(`a client has clicked ${parsedMsg.color} button`, parsedMsg)
-      state.disablebutton(parsedMsg.color)
+      state.handleSingleClick(parsedMsg)
       break
     case 'ledQueue':
       logger.info('a client has sent a new LED queue')
