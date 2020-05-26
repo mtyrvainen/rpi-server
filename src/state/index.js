@@ -101,7 +101,6 @@ const handleSingleClick = async (singleClickData) => {
 }
 
 const disableButton = (color) => {
-  // TODO: increase clicks in DB
   switch(color) {
   case 'r':
     if (serverState.buttonStatus.redButtonEnabled) {
@@ -160,7 +159,7 @@ const enableButton = (color) => {
     serverState.buttonStatus.redButtonEnabled = true
     serverState.buttonStatus.greenButtonEnabled = true
     serverState.buttonStatus.blueButtonEnabled = true
-    sendButtonEnable(color, serverState.socketConnections, serverState.queueConstraints.TIME_BETWEEN_QUEUE_EXECUTIONS)
+    sendButtonEnable(color, serverState.socketConnections, serverState.queueConstraints.timeBetweenExecutions)
     break
   default:
     logger.error('wrong button color for enabling, ignored')
