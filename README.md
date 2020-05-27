@@ -46,7 +46,7 @@ If you want to have access to your project/site via a nice URL, you'll need some
 1. to check the service is running properly: `sudo noip2 -S`
 
 ##### Git Projects
-You'll need to clone this repository, the one for the [frontend of this project](https://github.com/mtyrvainen/rpi-front) and for streaming the camera feed, you'll need [JSMpeg](https://github.com/phoboslab/jsmpeg). Run `git clone <repo>` and then `npm install` in each project folder.
+You'll need a clone of this repository, a clone of the [frontend of this project](https://github.com/mtyrvainen/rpi-front) and for streaming the camera feed, you'll need [JSMpeg](https://github.com/phoboslab/jsmpeg). Run `git clone <repo>` and then `npm install` in each project folder.
 
 Build the rpi-front project (`npm run build`) and copy the `build/` folder under rpi-server folder.
 
