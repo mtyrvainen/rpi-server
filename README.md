@@ -31,7 +31,7 @@ Check that everything was installed properly by running `node -v` and `npm -v`.
 
 ##### Dynamic DNS?
 
-If you want to have access to your project/site via a nice URL, you need some kind of DDNS solution. I used [noip.com](https://www.noip.com/). It's quick to setup, easy to install and free for a few devices. Register an account and then install the client software on RPi.
+If you want to have access to your project/site via a nice URL, you'll need some kind of DDNS solution, unless you have a static IP address from your ISP. I used [noip.com](https://www.noip.com/). It's quick to setup, easy to install and free for a few devices. Register an account and then install the client software on RPi.
 1. `mkdir /home/pi/noip`
 1. `cd /home/pi/noip`
 1.	`wget https://www.noip.com/client/linux/noip-duc-linux.tar.gz`
@@ -42,3 +42,6 @@ If you want to have access to your project/site via a nice URL, you need some ki
     * enter your hostname, username and password
 1. `sudo /usr/local/bin/noip2`
 1. to check the service is running properly: `sudo noip2 -S`
+
+##### Git Projects
+You'll need to clone this repository, the one for the [frontend of this project](https://github.com/mtyrvainen/rpi-front) and for streaming the camera feed, you'll need [JSMpeg](https://github.com/phoboslab/jsmpeg)
