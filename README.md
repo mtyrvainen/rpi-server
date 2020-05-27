@@ -70,6 +70,6 @@ Finally you're ready to run the project.
    * `ffmpeg -f v4l2 -framerate 24.8 -video_size 640x480 -i /dev/video0 -f mpegts -codec:v mpeg1video -s 640x480 -b:v 1000k -bf 0 http://localhost:8081/supersecret`
 1. Start the rpi-server (in dev mode for now):
    * `npm run dev`
-1. Navigate to your-domain.org:3001/build
+1. Navigate to _http://your-domain.org:3001/build_
 
 Done! You should be having a working project up and running now.
