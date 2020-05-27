@@ -58,6 +58,8 @@ Finally you're ready to run the project.
    * choose a password and substitute 'supersecret' with it
 1. Start ffmpeg to feed into the jsmpeg service. These parameters worked well for me:
    * `ffmpeg -f v4l2 -framerate 24.8 -video_size 640x480 -i /dev/video0 -f mpegts -codec:v mpeg1video -s 640x480 -b:v 1000k -bf 0 http://localhost:8081/supersecret`
-1. start the rpi-server (in dev mode for now):
+1. Start the rpi-server (in dev mode for now):
    * `npm run dev`
-1. navigate to your-domain.org:3001/build
+1. Navigate to your-domain.org:3001/build
+
+Done! If not working, you might need to do some port forwarding on your router for the 3001 port.
