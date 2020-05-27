@@ -1,12 +1,12 @@
 # rpi-server
-rpi-server is hobby project in which a Raspberry Pi is running web server and serving a web page from where you can click some buttons to make some LEDs dance. You can sometimes find it running [here](http://tyrvainen.hopto.org:3001/build). rpi-server is a Node.js backend, with some Python scripts, and it's combined with the [rpi-front](https://github.com/mtyrvainen/rpi-front) React front-end.
+**rpi-server** is hobby project in which a Raspberry Pi is running web server and serving a web page from where you can click some buttons to make some LEDs dance. You can sometimes find it running [here](http://tyrvainen.hopto.org:3001/build). **rpi-server** is a Node.js backend, with some Python scripts, and it's combined with the [**rpi-front**](https://github.com/mtyrvainen/rpi-front) React front-end.
 
-Please understand that this project is in no way a properly secure, ready-for-business-use, or follows any best practices. It was a learning journey for me and you can see that in the code.
+_Please understand that this project is in no way a properly secure, ready-for-business-use, or follows any best practices. It was a learning journey for me and you can see that in the code._
 
 ### 1. What do you need?
 If you want to run this project for yourself you will need:
-* Raspberry Pi (I'm using model 3B, your mileage may vary with other models)
-* a camera for the RPi (something like [this](https://www.raspberrypi.org/products/camera-module-v2/))
+* a **Raspberry Pi** (I'm using model 3B, your mileage may vary with other models)
+* a **camera** for the RPi (something like [this](https://www.raspberrypi.org/products/camera-module-v2/))
 * some LEDs and stuff
 
 ### 2. Preparing the RPi
@@ -48,15 +48,15 @@ If you want to have access to your project/site via a nice URL, you'll need some
 You might need to do some port forwarding on your router for the 3001 port.
 
 ##### Clone the Git Projects
-You'll need a clone of this repository, a clone of the [frontend of this project](https://github.com/mtyrvainen/rpi-front) and for streaming the camera feed, you'll need [JSMpeg](https://github.com/phoboslab/jsmpeg). Run `git clone <repo>` and then `npm install` in each project folder.
+You'll need a clone of this repository, a clone of the [frontend of this project](https://github.com/mtyrvainen/rpi-front) and for streaming the camera feed, you'll need [**JSMpeg**](https://github.com/phoboslab/jsmpeg). Run `git clone <repo>` and then `npm install` in each project folder.
 
 Build the rpi-front project (`npm run build`) and copy the `build/` folder under rpi-server folder.
 
 ##### Connect the LEDs
 Connect however you like, breadboard or not, but the Python script assumes the LEDs in these pins:
-  * red = LED(23) [= pin number 16]
-  * green = LED(18) [= pin number 12]
-  * blue = LED(24) [= pin number 18]
+  * **red** = LED(**23**) [= pin number 16]
+  * **green** = LED(**18**) [= pin number 12]
+  * **blue** = LED(**24**) [= pin number 18]
 
 as per the [GPIO Zero project GPIO numbering](https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering).
 
