@@ -6,7 +6,7 @@ Please understand that this project is in no way a properly secure, ready-for-bu
 ### 1. What do you need?
 If you want to run this project for yourself you will need:
 * Raspberry Pi (I'm using model 3B, your mileage may vary with other models)
-* a camera for the RPi (something like [this](https://www.raspberrypi.org/products/camera-module-v2/)
+* a camera for the RPi (something like [this](https://www.raspberrypi.org/products/camera-module-v2/))
 * a some LEDs and stuff
 
 ### 2. Preparing the RPi
