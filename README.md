@@ -1,6 +1,8 @@
 # rpi-server
 rpi-server is hobby project in which a Raspberry Pi is running web server and serving a web page from where you can click some buttons to make some LEDs dance. You can sometimes find it running [here](http://tyrvainen.hopto.org:3001/build).
 
+Please understand that this project is in no way a properly secure, ready-for-business-use, or follows any best practices. It was a learning journey for me and you can see that in the code.
+
 ### 1.What do you need?
 If you want to run this project for yourself you will need:
 * Raspberry Pi (I'm using model 3B, your mileage may vary with other models)
