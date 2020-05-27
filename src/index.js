@@ -29,6 +29,7 @@ app.use('/api/led', ledRouter)
 if (process.env.NODE_ENV === 'dev') {
   logger.info('running in dev, serving public folder')
   app.use('/', express.static('public'))
+  app.use('/build/', express.static('build'))
 }
 
 // eslint-disable-next-line no-unused-vars
