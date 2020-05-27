@@ -21,13 +21,13 @@ You need a bunch of software, most of of which you can install via `apt-get`. Ma
 * ffmpeg
 
 ##### Install Node.js manually
-What you shouldn't install the usual way is Node.js. Depending on your RPi model, you need check which ARM version your processor is using (run `uname`), and download the proper Node version from the [official site](https://nodejs.org/en/download/). If you have the same model 3B you should be fine using [this version](https://nodejs.org/dist/v12.16.3/node-v12.16.3-linux-armv7l.tar.xz), but please doublecheck youself.
+What you shouldn't install the usual way is Node.js. Depending on your RPi model, you need check which ARM version your processor is using (run `uname -a`), and download the proper Node version from the [official site](https://nodejs.org/en/download/). If you have the same model 3B you should be fine using [this version](https://nodejs.org/dist/v12.16.3/node-v12.16.3-linux-armv7l.tar.xz), but please doublecheck youself.
 
 1. `wget https://nodejs.org/dist/v12.16.3/node-v12.16.3-linux-armv7l.tar.xz`
 1. `tar -xf <nodefilename>.tar.xz`
 1. `cd node-v6.11.1-linux-armv6l/`
 1. `sudo cp -R * /usr/local/`
-1. and reboot
+1. and reboot the RPi
 
 Check that everything was installed properly by running `node -v` and `npm -v`.
 
