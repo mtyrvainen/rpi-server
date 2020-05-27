@@ -45,6 +45,9 @@ If you want to have access to your project/site via a nice URL, you'll need some
 1. `sudo /usr/local/bin/noip2`
 1. to check the service is running properly: `sudo noip2 -S`
 
+##### Port forwarding
+You might need to do some port forwarding on your router for the 3001 port.
+
 ##### Git Projects
 You'll need a clone of this repository, a clone of the [frontend of this project](https://github.com/mtyrvainen/rpi-front) and for streaming the camera feed, you'll need [JSMpeg](https://github.com/phoboslab/jsmpeg). Run `git clone <repo>` and then `npm install` in each project folder.
 
@@ -62,4 +65,4 @@ Finally you're ready to run the project.
    * `npm run dev`
 1. Navigate to your-domain.org:3001/build
 
-Done! If not working, you might need to do some port forwarding on your router for the 3001 port.
+Done! You should be having a working project up and running now.
