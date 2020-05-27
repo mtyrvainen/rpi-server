@@ -66,7 +66,7 @@ Finally you're ready to run the project.
 1. Run the jsmpeg websocket service:
    * `node websocket-relay.js supersecret 8081 8082`
    * choose a password and substitute 'supersecret' with it
-1. Start ffmpeg to feed into the jsmpeg service. These parameters worked well for me:
+1. Start ffmpeg to feed into the jsmpeg service. These parameters worked well for me (remember to substitute 'supersecret' with your own password):
    * `ffmpeg -f v4l2 -framerate 24.8 -video_size 640x480 -i /dev/video0 -f mpegts -codec:v mpeg1video -s 640x480 -b:v 1000k -bf 0 http://localhost:8081/supersecret`
 1. Start the rpi-server (in dev mode for now):
    * `npm run dev`
