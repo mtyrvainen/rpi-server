@@ -58,7 +58,7 @@ Connect however you like, breadboard or not, but the Python script assumes the L
   * green = LED(18) [= pin number 12]
   * blue = LED(24) [= pin number 18]
 
-as per the [GPIO Zero project GPIO numbering]((https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering).
+as per the [GPIO Zero project GPIO numbering](https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering).
 
 ### 3. Running the project
 Finally you're ready to run the project.
