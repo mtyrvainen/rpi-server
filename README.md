@@ -53,21 +53,21 @@ You'll need a clone of this repository, a clone of the [frontend of this project
 ##### Change some settings
 
 For **rpi-server** you should consider creating `.env` file for some parameters.  
-`SERVER_PORT=3001  
-SQLITE_DB=./db/test.db`
+`SERVER_PORT=3001`  
+`SQLITE_DB=./db/test.db`
 
 Also check `src/config/index.js` for some global settings:  
-`const TIME_BETWEEN_QUEUE_EXECUTIONS = 60000 // in milliseconds  
-const LED_QUEUE_MAX_LENGTH = 10  
-const MAX_LEDS_PER_QUEUE_ITEM = 10  
-const MAX_TIME_ALLOWED_PER_LED = 5000 // in milliseconds  
-const MIN_TIME_ALLOWED_PER_LED = 100 // in milliseconds  
-const BUTTON_TIMEOUT = 3000 // in milliseconds  
+`const TIME_BETWEEN_QUEUE_EXECUTIONS = 60000 // in milliseconds`  
+`const LED_QUEUE_MAX_LENGTH = 10`  
+`const MAX_LEDS_PER_QUEUE_ITEM = 10`  
+`const MAX_TIME_ALLOWED_PER_LED = 5000 // in milliseconds`  
+`const MIN_TIME_ALLOWED_PER_LED = 100 // in milliseconds`  
+`const BUTTON_TIMEOUT = 3000 // in milliseconds`  
 
-if (process.env.NODE_ENV === 'dev') {  
-  SERVER_PORT = 3001  
-  SQLITE_DB = './db/test.db'  
-}`  
+`if (process.env.NODE_ENV === 'dev') {`  
+  `SERVER_PORT = 3001`
+  `SQLITE_DB = './db/test.db'  
+`}`
 
 Even if you don't have a `.env` file, you'll still have the proper parameters set, if you're running in 'dev'.
 
