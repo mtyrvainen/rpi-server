@@ -31,8 +31,7 @@ What you shouldn't install the usual way is Node.js. Depending on your RPi model
 
 Check that everything was installed properly by running `node -v` and `npm -v`.
 
-##### Dynamic DNS?
-
+##### Setup Dynamic DNS?
 If you want to have access to your project/site via a nice URL, you'll need some kind of DDNS solution, unless you have a static IP address from your ISP. I used [noip.com](https://www.noip.com/). It's quick to setup, easy to install and free for a few devices. Register an account and then install the client software on RPi.
 1. `mkdir /home/pi/noip`
 1. `cd /home/pi/noip`
@@ -45,13 +44,21 @@ If you want to have access to your project/site via a nice URL, you'll need some
 1. `sudo /usr/local/bin/noip2`
 1. to check the service is running properly: `sudo noip2 -S`
 
-##### Port forwarding
+##### Setup Port Forwarding
 You might need to do some port forwarding on your router for the 3001 port.
 
-##### Git Projects
+##### Clone the Git Projects
 You'll need a clone of this repository, a clone of the [frontend of this project](https://github.com/mtyrvainen/rpi-front) and for streaming the camera feed, you'll need [JSMpeg](https://github.com/phoboslab/jsmpeg). Run `git clone <repo>` and then `npm install` in each project folder.
 
 Build the rpi-front project (`npm run build`) and copy the `build/` folder under rpi-server folder.
+
+##### Connect the LEDs
+Connect however you like, breadboard or not, but the Python script assumes the LEDs in these pins:
+  * red = LED(23) [= pin number 16]
+  * green = LED(18) [= pin number 12]
+  * blue = LED(24) [= pin number 18]
+
+as per the [GPIO Zero project numbering]((https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering).
 
 ### 3. Running the project
 Finally you're ready to run the project.
