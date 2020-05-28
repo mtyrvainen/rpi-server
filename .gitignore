@@ -4,3 +4,4 @@ node_modules/
 messages
 build/
 db/test.db
+.vscode/
