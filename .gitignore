@@ -4,4 +4,5 @@ node_modules/
 messages
 build/
 db/test.db
+python-service/__pycache__/
 .vscode/
