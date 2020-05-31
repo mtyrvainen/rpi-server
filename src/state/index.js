@@ -42,7 +42,6 @@ const addLedQueueItem = (queueItem) => {
     serverState.ledQueue.push(queueItem)
     sendNewQueueItem(queueItem, serverState.socketConnections)
     if (serverState.ledQueue.length === serverState.queueConstraints.maxQueueLength) {
-      //TODO: disable queue builder
       serverState.isQueueBuilderDisabled = true
       sendDisableQueueBuilder(serverState.socketConnections)
     }

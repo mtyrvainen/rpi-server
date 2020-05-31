@@ -12,11 +12,9 @@ const state = require('./state')
 const ledService = require('./services/ledService')
 const serverMessageService = require('./services/serverMessageService')
 const clientMessageService = require('./services/clientMessageService')
-//const cors = require('cors')
 
 const app = express()
 app.use(express.json())
-//app.use(cors())
 app.use(middleware.requestLogger)
 
 // eslint-disable-next-line no-unused-vars

@@ -40,7 +40,7 @@ const initializeClientData = async (ws) => {
   ws.send(JSON.stringify({
     type: 'clientInitialData',
     queue: state.serverState.ledQueue,
-    // TODO: currently running queue item
+    // TODO: send currently running queue item data
     redButton: state.serverState.buttonStatus.redButtonEnabled,
     greenButton: state.serverState.buttonStatus.greenButtonEnabled,
     blueButton: state.serverState.buttonStatus.blueButtonEnabled,

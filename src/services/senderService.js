@@ -17,13 +17,6 @@ const sendToAllClients = (msg, socketConnections) => {
   }
 }
 
-/*
-const sendToClient = (msg, ws) => {
-  ws.send(JSON.stringify(msg))
-}*/
-
-/* -- wrappers -- */
-
 const sendButtonDisable = (color, socketConnections, timeOut=0) => {
   sendToAllClients({
     type: 'disableButton',
@@ -112,9 +105,6 @@ const sendConnectedClientsAmount = (socketConnections) => {
 
 
 module.exports = {
-  //sendToLedServer,
-  //sendToAllClients,
-  //sendToClient,
   sendButtonDisable,
   sendButtonEnable,
   sendNewQueueItem,
