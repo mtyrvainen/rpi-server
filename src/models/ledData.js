@@ -3,6 +3,8 @@ const sqlite3 = require('sqlite3').verbose()
 const sqlite = require('sqlite')
 const logger = require('../utils/logger')
 
+let dbConnection = undefined
+
 const openDb = async (dbName) => {
   try {
     const db = await sqlite.open({
@@ -26,28 +28,22 @@ const closeDb = async (db) => {
 }
 
 const getServerStartTime = async() => {
-  const db = await openDb(config.SQLITE_DB)
-
-  const uptime = db.get(`SELECT server_start as uptime
+  const uptime = dbConnection.get(`SELECT server_start as uptime
     FROM clicks`)
-  closeDb(db)
+
   return uptime
 }
 
 const getLedClicks = async () => {
-  const db = await openDb(config.SQLITE_DB)
-
-  const ledResult = db.get(`SELECT red_clicks as redClicks,
+  const ledResult = dbConnection.get(`SELECT red_clicks as redClicks,
     blue_clicks as blueClicks,
     green_clicks as greenClicks
     FROM clicks`)
-  closeDb(db)
+
   return ledResult
 }
 
 const updateSingleClicks = async (clickData) => {
-  const db = await openDb(config.SQLITE_DB)
-
   let color
   switch(clickData.color) {
   case 'r':
@@ -61,19 +57,18 @@ const updateSingleClicks = async (clickData) => {
     break
   }
 
-  const updateResult = await db.run(
+  const updateResult = await dbConnection.run(
     `UPDATE clicks SET ${color} = ${color} + 1`
   )
 
   logger.info('DB opened, handling single click now:', updateResult)
-  const updatedClicks = await db.get(
+  const updatedClicks = await dbConnection.get(
     `SELECT red_clicks as redClicks,
       blue_clicks as blueClicks,
       green_clicks as greenClicks
       FROM clicks`
   )
 
-  closeDb(db)
   return updatedClicks
 }
 
@@ -87,7 +82,7 @@ const initializeClickData = async () => {
       server_start = CURRENT_TIMESTAMP`
   )
 
-  closeDb(db)
+  dbConnection = db
   return updateResult
 }
 

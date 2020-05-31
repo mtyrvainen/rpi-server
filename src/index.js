@@ -30,6 +30,10 @@ if (process.env.NODE_ENV === 'dev') {
   app.use('/build/', express.static('build'))
 }
 
+if (process.env.NODE_ENV === 'dev') {
+  app.use('/build/', express.static('build'))
+}
+
 // eslint-disable-next-line no-unused-vars
 app.ws('/client-socket', (ws, _req) => {
   ws.route = '/client-socket'
@@ -81,7 +85,6 @@ app.ws('/led-socket', (ws, _req) => {
     state.removeLedServer()
   })
 })
-
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
